@@ -117,7 +117,7 @@ def swissPairings():
     db_cursor.execute("select * from players order by wins DESC")
     DB = db_cursor.fetchall()
     db.close()
-    df = pd.DataFrame(DB, columns= ['names','id','wins','matches'])
+    df = pd.DataFrame(DB, columns= ['id','names','wins','matches'])
     pair = []
     for i in range(0,len(df),2):
         pair.append((df.iloc[i]['id'],df.iloc[i]['names'],df.iloc[i+1]['id'],df.iloc[i+1]['names']))
