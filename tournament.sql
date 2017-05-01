@@ -12,9 +12,7 @@ CREATE DATABASE tournament;
 
 create table players (
 id serial primary key,
-name text,
-wins int default 0,
-matches int default 0
+name text
 );
 
 create table matches(
@@ -22,3 +20,13 @@ id serial primary key,
 winner int references players(id),
 loser int references players(id)
 );
+
+
+CREATE VIEW player_standings AS
+SELECT players.id,players.name,
+(SELECT count(matches.winner) FROM matches WHERE players.id = matches.winner) as wins_no,
+(SELECT count(matches.id) FROM matches
+WHERE players.id  = matches.winner
+OR players.id = matches.loser) AS matches_no
+FROM players
+ORDER BY wins_no, matches_no DESC;
